@@ -23,6 +23,8 @@ export default class TodoList extends React.Component {
     //这种方式value必须缓存 不然会报错
     let value = ev.target.value;
     this.setState((prevState) => ({inputValue: value}));
+
+    // console.log('this.input:',this.input)
   };
 
   handleAdd = (ev) => {
@@ -36,7 +38,10 @@ export default class TodoList extends React.Component {
     this.setState((prevState) => ({
       list: [...prevState.list, {id: timestamp, content: prevState.inputValue}]
       , inputValue: ''
-    }));
+    }),()=>{
+      //setState是异步执行的，操作dom需要在回调里进行
+      console.log(this.url.querySelectorAll('div').length);
+    });
   };
 
   handleDel = (ev, id) => {
@@ -80,13 +85,14 @@ export default class TodoList extends React.Component {
           value={this.state.inputValue}
           onChange={this.handleInputChange}
           className='input'
+          ref={x=>this.input=x}
         />
         <button
           onClick={this.handleAdd}
         >提交
         </button>
 
-        <ul>
+        <ul ref={x=>this.url=x}>
           {this.getTodoItems()}
         </ul>
         {/*</div>*/}
