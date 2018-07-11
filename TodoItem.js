@@ -22,7 +22,7 @@ class TodoItem extends React.Component {
    * ,意思是如果这个组件是第一次存在于父组件中，不会执行
    * 如果这个组件之前已经存在于父组件中，才会执行
    *
-   * 注意，并不是子组件接收的props发生改变才会执行，而是父组件重新调用render时就会执行，因为React只要父组件重新render，子组件也务必会重新render，
+   * 注意，【并不是】子组件接收的props发生改变才会执行，而是父组件重新调用render时就会执行，因为React只要父组件重新render，子组件也务必会重新render，
    * ，而什么时候会认render呢？
    * 只要父组件的一个状态发生改变就会render
    * ，So一个子组件render可能并不是因为它所接受的参数变化而render，而可能是被牵连的
@@ -33,9 +33,27 @@ class TodoItem extends React.Component {
     console.log('child componentWillReceiveProps');
   }
 
+  shouldComponentUpdate(nextProps,nextState){
+    if(nextProps.content !== this.props.content){
+      return true;
+    }
+
+    return false;
+  }
+
+  //TODO 通过ajax请求获取的数据应该只获取一次，So不要放在render、shouldComponentUpdate里进行
+  //而componentWillMount虽然不会重复执行，但在跨平台开发等可能存在冲突
+  //constructor按理说也可以
+
+  componentWillUnmount(){
+    //比如这里 点击删除按钮时就会触发
+    console.log('child componentWillUnmount');
+  }
+
   render() {
     let {handleDel, item} = this.props;
 
+    console.log('child render');
     return (
       <React.Fragment>
 
