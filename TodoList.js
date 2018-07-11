@@ -67,6 +67,12 @@ export default class TodoList extends React.Component {
       <React.Fragment>
         {/*<div>*/}
 
+        {/*
+          //TODO 这些不是dom，只是一个模板(React.createELement的语法糖)，需要先和数据结合生成虚拟dom，然后再又虚拟dom生成真实dom
+
+          //JSX -> createElement -> 虚拟DOM(JS对象) -> 真实的DOM
+        */}
+
         <label htmlFor="testLabel">我是一个label</label>
         <input
           id='testLabel'

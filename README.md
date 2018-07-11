@@ -65,3 +65,75 @@ React只负责视图层
 都是一个个方法
 
 方便自动化测试
+
+##  虚拟dom
+>传统渲染
+
+1. state 数据
+2. JSX 模板
+3. 数据 + 模板 结合，生成真实的DOM，来显示
+4. state 发生改变
+5. 数据 + 模板 结合，生成真实的DOM，替换原始的DOM
+
+缺陷：
+第一次生成一个完整的DOM片段
+
+第二次又生成了一个完整的DOM片段
+
+第二次的DOM替换第一次的DOM
+
+->灰常耗性能
+
+---
+
+> 过渡时期
+
+1. state 数据
+2. JSX 模板
+3. 数据 + 模板 结合，生成真实的DOM，来显示
+4. state 发生改变
+5. 数据 + 模板 结合，生成真实的DOM，并不直接替换原始的DOM
+6. 新的DOM(DocumentFragment) 和 原始的DOM 做比对，找差异
+7. 找出input框发生了哪些变化
+8. 只用新的DOM中的xx，替换掉老的DOM中的xx
+
+缺陷：
+拿新的DOM和原始的DOM直接做比对，也很消耗性能
+
+>虚拟dom
+
+1. state 数据
+2. JSX 模板
+
+4. 数据 + 模板 结合生成虚拟DOM(虚拟DOM就是一个JS对象，用来描述真实DOM)
+{type:'div',props:{id:'abc',children:['123',{type:'span',props:{children:'some word'}}]}}
+
+3. 用虚拟DOM的结构生成真实的DOM，来显示
+<div id='abc'>123<span>some word</span></div>
+
+5. state 发生变化
+
+6. 数据 + 模板 生成新的虚拟DOM
+{type:'div',props:{id:'abc',children:['123',{type:'span',props:{children:'bye bye'}}]}}
+
+7. 找到原始虚拟DOM和新的虚拟DOM的区别在哪里(DOM Diff)
+Diff，difference
+
+为什么setState是异步的？
+如果短时间内连续调用几次setState，只会调用一次虚拟DOM的比对
+
+Diff细节
+- 如果上一层的节点都不相同，就不会比对下层的，会整个都替换掉
+  ，同层比对的好处在于算法简单，比对速度更快
+
+- 一个虚拟dom可能有很多个子节点，那这时，新的和旧的比对时，就需要知道新的某一个节点和旧的哪一个节点进行比较，设置key值就是为了解决这个问题(这也是为什么不推荐使用像index这种不稳定的值作为key值)，他们会按照这个key值来组队比较
+
+8. 根据区别，直接操作DOM中要改变的那部分(将some word改成bye bye)
+                       ↓
+<div id='abc'>123<span>bye bye</span></div>
+
+虚拟DOM的优势：
+1. 性能提升
+2. 支持跨端应用 -> React Native
+  原生应用里不存在dom的概念，但是有了虚拟dom，它只是一个js对象，是可以被识别的
+  ，这个时候只需要做一些调整，不让虚拟dom生成dom而是转换成原生应用里的组件 即可
