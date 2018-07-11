@@ -40,7 +40,7 @@ export default class TodoList extends React.Component {
       , inputValue: ''
     }),()=>{
       //setState是异步执行的，操作dom需要在回调里进行
-      console.log(this.url.querySelectorAll('div').length);
+      // console.log(this.url.querySelectorAll('div').length);
     });
   };
 
@@ -66,7 +66,7 @@ export default class TodoList extends React.Component {
       //单行注释
     }
 
-    console.log('TodoList render');
+    // console.log('TodoList render');
 
     return (
       <React.Fragment>
