@@ -51,3 +51,37 @@
     color:blue;
   }
 }
+
+/*入场动画执行的第一个时刻*/
+.fade-enter{
+  opacity: 0;
+}
+
+/* 入场动画执行的第二个时刻，一直存在于入场动画结束 */
+.fade-enter-active{
+  opacity: 1;
+  transition:opacity 1.5s ease-in-out;
+}
+
+.fade-enter-done {
+  opacity: 1;
+}
+
+/*出场动画执行的第一个时刻*/
+.fade-exit{
+  opacity: 1;
+}
+
+/* 出场动画执行的第二个时刻到出场动画结束 */
+.fade-exit-active{
+  opacity: 0;
+  transition:opacity 1.5s ease-in-out;
+}
+
+.fade-exit-done {
+  opacity: 0;
+}
+
+.fade-active{}
+
+.fade-appear-active{}
