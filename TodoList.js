@@ -1,8 +1,10 @@
 import React from 'react';
 import './style.css';
 import TodoItem from './TodoItem';
+import Test from './Test';
 
 export default class TodoList extends React.Component {
+  //TODO 当组件的state或则props发生改变的时候，render函数就会重新执行，并且当父组件的render被重新执行时，子组件的render全部会被重新执行一次
   state = this.state = {
     inputValue: ''
     , list: []
@@ -20,7 +22,7 @@ export default class TodoList extends React.Component {
 
     //这种方式value必须缓存 不然会报错
     let value = ev.target.value;
-    this.setState((prevState)=>({inputValue: value}));
+    this.setState((prevState) => ({inputValue: value}));
   };
 
   handleAdd = (ev) => {
@@ -31,8 +33,8 @@ export default class TodoList extends React.Component {
     //   , inputValue: ''
     // });
 
-    this.setState((prevState)=>({
-      list: [...prevState.list, {id:timestamp,content:prevState.inputValue}]
+    this.setState((prevState) => ({
+      list: [...prevState.list, {id: timestamp, content: prevState.inputValue}]
       , inputValue: ''
     }));
   };
@@ -42,12 +44,12 @@ export default class TodoList extends React.Component {
     //   list: this.state.list.filter((item) => item.id !== id)
     // });
 
-    this.setState((prevState)=>({
+    this.setState((prevState) => ({
       list: prevState.list.filter((item) => item.id !== id)
     }));
   };
 
-  getTodoItems(){
+  getTodoItems() {
     return this.state.list.map((item, index) => {
       return <TodoItem item={item} key={item.id} handleDel={this.handleDel}/>;
     })
@@ -58,6 +60,8 @@ export default class TodoList extends React.Component {
     {
       //单行注释
     }
+
+    console.log('TodoList render');
 
     return (
       <React.Fragment>
@@ -80,6 +84,8 @@ export default class TodoList extends React.Component {
           {this.getTodoItems()}
         </ul>
         {/*</div>*/}
+
+        <Test content={this.state.inputValue}></Test>
       </React.Fragment>
     );
   }

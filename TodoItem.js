@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class TodoItem extends React.Component {
   state = {
-    
+
   };
 
   static defaultProps = {
