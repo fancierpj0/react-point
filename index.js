@@ -5,4 +5,4 @@ import App from './App';
 
 import TodoList from './TodoList';
 
-ReactDOM.render(<TodoList/>, document.getElementById('root'));
+ReactDOM.render(<App/>, document.getElementById('root'));
