@@ -1,4 +1,5 @@
 import React from 'react';
+import './style.css';
 
 export default class TodoList extends React.Component {
   constructor(props) {
@@ -28,7 +29,7 @@ export default class TodoList extends React.Component {
     });
   };
 
-  handleDel = (ev,id) => {
+  handleDel = (ev, id) => {
     this.setState({
       list: this.state.list.filter((item, index) => index !== id)
     });
@@ -36,13 +37,21 @@ export default class TodoList extends React.Component {
 
   render() {
     /* render函数返回的内容必须整体被包含在一个大的元素中 */
+    {
+      //单行注释
+    }
+
     return (
       <React.Fragment>
         {/*<div>*/}
+
+        <label htmlFor="testLabel">我是一个label</label>
         <input
+          id='testLabel'
           type="text"
           value={this.state.inputValue}
           onChange={this.handleInputChange}
+          className='input'
         />
         <button
           onClick={this.handleAdd}
@@ -53,9 +62,16 @@ export default class TodoList extends React.Component {
           {
             this.state.list.map((item, index) => {
               return (
-                <li key={index}>
-                  {item}
-                  <button onClick={(ev)=>this.handleDel(ev,index)}>删除</button>
+                <li
+                  key={index}
+                  dangerouslySetInnerHTML={{__html:item}}
+                >
+                  {
+                    //TODO 如果一个元素使用dangerouslySetInnerHTML来设置内部的html，那么不要在元素内部再使用jsx，这样会报错
+                    //invariant.js:42 Uncaught Error: Can only set one of `children` or `props.dangerouslySetInnerHTML`.
+                  }
+                  {/*{item}*/}
+                  {/*<button onClick={(ev) => this.handleDel(ev, index)}>删除</button>*/}
                 </li>
               )
             })
