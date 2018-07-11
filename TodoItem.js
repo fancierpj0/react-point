@@ -1,8 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default class TodoItem extends React.Component{
+class TodoItem extends React.Component {
+  state = {
+    
+  };
 
-  render(){
+  static defaultProps = {
+
+  };
+
+  static propTypes = {
+    item:PropTypes.object.isRequired
+    ,handleDel:PropTypes.func.isRequired
+  };
+
+  render() {
     let {handleDel, item} = this.props;
 
     return (
@@ -22,9 +35,20 @@ export default class TodoItem extends React.Component{
 
         <li>
           {item.content}
-          <button onClick={(ev)=>handleDel(ev,item.id)}>删除</button>
+          <button onClick={(ev) => handleDel(ev, item.id)}>删除</button>
         </li>
       </React.Fragment>
     )
   }
 }
+
+// TodoItem.defaultProps = {
+//
+// };
+
+// TodoItem.propTypes = {
+//   item:PropTypes.object.isRequired
+//   ,handleDel:PropTypes.func.isRequired
+// };
+
+export default TodoItem;
