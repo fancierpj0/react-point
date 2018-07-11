@@ -40,3 +40,28 @@ import registerServiceWorker from './registerServiceWorker'
 
 ## import React from 'react'
 只要使用jsx语法，就需要引入react库(而非react-dom)
+
+## 声明式与命令式
+声明式只需要声明一份图纸，就能达到某种功能
+
+而命令式，必须要深入细节，亲自动手搬每一块砖
+
+## React与其它库
+React并不会影响其它库的运行
+
+，它只会管理它挂载的根节点往下的区域
+
+## 单向数据流
+子组件可以获得父组件的数据，但不可以更改
+
+这是为了防止同一份数据被多个组件共用时bug的定位
+
+## 视图层框架
+React只负责视图层
+
+数据层 有redux mobx 等
+
+## 函数式编程
+都是一个个方法
+
+方便自动化测试
