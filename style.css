@@ -3,11 +3,51 @@
 }
 
 .show{
-  opacity: 1;
-  transition:all .5s ease-in-out;
+  /*opacity: 1;*/
+  /*transition:all .5s ease-in-out;*/
+
+  animation: show-item 2s ease-in-out forwards;
+
 }
 
-.hide{
-  opacity: 0;
-  transition:all .5s ease-in-out;
+.hide {
+  /*opacity: 0;*/
+  /*transition:all .5s ease-in-out;*/
+
+  animation: hide-item 2s ease-in-out forwards;
+
+}
+
+/*
+  @keyframes 最后一帧的动画效果默认不会保存下来
+  添加forwards后，就能保存下来
+*/
+@keyframes hide-item {
+  0%{
+    opacity: 1;
+    color:red;
+  }
+  50%{
+    opacity: .5;
+    color:green;
+  }
+  100%{
+    opacity: 0;
+    color:blue;
+  }
+}
+
+@keyframes show-item {
+  0%{
+    opacity: 0;
+    color:red;
+  }
+  50%{
+    opacity: .5;
+    color:green;
+  }
+  100%{
+    opacity: 1;
+    color:blue;
+  }
 }
