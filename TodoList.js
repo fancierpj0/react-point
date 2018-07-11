@@ -1,5 +1,6 @@
 import React from 'react';
 import './style.css';
+import TodoItem from './TodoItem';
 
 export default class TodoList extends React.Component {
   constructor(props) {
@@ -23,15 +24,17 @@ export default class TodoList extends React.Component {
   };
 
   handleAdd = (ev) => {
+    let timestamp = new Date().getTime();
+
     this.setState({
-      list: [...this.state.list, this.state.inputValue]
+      list: [...this.state.list, {id:timestamp,content:this.state.inputValue}]
       , inputValue: ''
     });
   };
 
   handleDel = (ev, id) => {
     this.setState({
-      list: this.state.list.filter((item, index) => index !== id)
+      list: this.state.list.filter((item) => item.id !== id)
     });
   };
 
@@ -62,17 +65,7 @@ export default class TodoList extends React.Component {
           {
             this.state.list.map((item, index) => {
               return (
-                <li
-                  key={index}
-                  dangerouslySetInnerHTML={{__html:item}}
-                >
-                  {
-                    //TODO 如果一个元素使用dangerouslySetInnerHTML来设置内部的html，那么不要在元素内部再使用jsx，这样会报错
-                    //invariant.js:42 Uncaught Error: Can only set one of `children` or `props.dangerouslySetInnerHTML`.
-                  }
-                  {/*{item}*/}
-                  {/*<button onClick={(ev) => this.handleDel(ev, index)}>删除</button>*/}
-                </li>
+                <TodoItem item={item} key={item.id} handleDel={this.handleDel}/>
               )
             })
           }
