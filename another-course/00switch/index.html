@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        /*normal|icon|window|button|menu|field;*/
+        .switch{
+            -webkit-appearance: none;
+            width:50px;
+            border:1px solid #dfdfdf;
+            border-radius:30px;
+            height:32px;
+            /* borderbox */
+            outline:none;
+            position:relative;
+            /*background:#7264ff;*/
+            transition:all .2s linear;
+        }
+        .switch:checked{
+            box-shadow:#343cff 0 0 16px 16px inset;
+            transition:all .2s linear;
+        }
+        .switch:before{
+            content:'';
+            position:absolute;
+            left:0;
+            top:0;
+            width:30px;
+            height:30px;
+            border-radius: 50%;
+            box-shadow:1px 1px 2px 0 #dfdfdf;
+            background:#fff;
+            transition:all .2s linear;
+        }
+        .switch:checked:before{
+          left:20px;
+          transition:all .2s linear;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <div>
+            <input type="checkbox" class="switch">
+            <p class="text">关</p>
+        </div>
+
+        <div>
+            <input type="checkbox" class="switch">
+            <p class="text">关</p>
+        </div>
+
+    </div>
+    <script>
+      let btn = document.querySelector('.switch');
+      let text = document.querySelector('.text');
+      btn.addEventListener('change', function (e) {
+        text.innerHTML = e.target.checked ? '开' : '关';
+      });
+
+      //TODO Q:如何复用JS?
+    </script>
+</body>
+</html>

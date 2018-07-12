@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        /*normal|icon|window|button|menu|field;*/
+        .switch{
+            -webkit-appearance: none;
+            width:50px;
+            border:1px solid #dfdfdf;
+            border-radius:30px;
+            height:32px;
+            /* borderbox */
+            outline:none;
+            position:relative;
+            /*background:#7264ff;*/
+            transition:all .2s linear;
+        }
+        .switch:checked{
+            box-shadow:#343cff 0 0 16px 16px inset;
+            transition:all .2s linear;
+        }
+        .switch:before{
+            content:'';
+            position:absolute;
+            left:0;
+            top:0;
+            width:30px;
+            height:30px;
+            border-radius: 50%;
+            box-shadow:1px 1px 2px 0 #dfdfdf;
+            background:#fff;
+            transition:all .2s linear;
+        }
+        .switch:checked:before{
+            left:20px;
+            transition:all .2s linear;
+        }
+    </style>
+</head>
+<body>
+<div class="app">
+
+</div>
+<script>
+  // 1.我们将字符串进行封装：字符串不能绑定事件
+  // 2.将字符串变换成dom元素
+  // 3.提取公用的类，如果想重新渲染dom 可以通过setState
+  // 4.模拟render渲染
+  class Component{
+    createDOMFromString(str){
+      let oDiv = document.createElement('div');
+      oDiv.innerHTML = str;
+      return oDiv.firstElementChild;
+    }
+
+
+    setState(newState){
+      Object.assign(this.state,newState); //之所以不直接赋值，是因为state里可能还有其他属性
+      //this.state={...this.state,...{turn:!this.state.turn}}
+
+      let oldEl = this.el;
+      let newEl = this._render(); //渲染一个新的元素
+      oldEl.parentNode.replaceChild(newEl, oldEl);
+    }
+
+    _render(){
+      // app.appendChild(new Switch()._render()); -> this指向Switch的实例
+      this.el = this.createDOMFromString(this.render());
+      this.el.firstElementChild.addEventListener('change',()=>this.Change());
+      return this.el;
+    }
+
+    mount(container){
+      container.appendChild(this._render());
+    }
+  }
+
+  class Switch extends Component{
+    constructor(){
+      super();
+      this.state = {turn: false};
+    }
+
+    Change(){
+      // console.log(this)
+      this.setState({turn:!this.state.turn});
+    }
+
+    render(){
+      return `
+        <div>
+            <input type="checkbox" class="switch" ${this.state.turn?'checked':''} >
+            <p class="text">${this.state.turn?'开':'关'}</p>
+        </div>
+        `
+    }
+  }
+
+  let app = document.querySelector('.app');
+  // app.appendChild(new Switch()._render());
+  // app.appendChild(new Switch()._render());
+  let render = (ele, container) => {
+    ele.mount(container);
+  };
+  render(new Switch(), app);
+</script>
+</body>
+</html>

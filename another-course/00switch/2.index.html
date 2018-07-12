@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        /*normal|icon|window|button|menu|field;*/
+        .switch{
+            -webkit-appearance: none;
+            width:50px;
+            border:1px solid #dfdfdf;
+            border-radius:30px;
+            height:32px;
+            /* borderbox */
+            outline:none;
+            position:relative;
+            /*background:#7264ff;*/
+            transition:all .2s linear;
+        }
+        .switch:checked{
+            box-shadow:#343cff 0 0 16px 16px inset;
+            transition:all .2s linear;
+        }
+        .switch:before{
+            content:'';
+            position:absolute;
+            left:0;
+            top:0;
+            width:30px;
+            height:30px;
+            border-radius: 50%;
+            box-shadow:1px 1px 2px 0 #dfdfdf;
+            background:#fff;
+            transition:all .2s linear;
+        }
+        .switch:checked:before{
+            left:20px;
+            transition:all .2s linear;
+        }
+    </style>
+</head>
+<body>
+<div class="app">
+
+</div>
+<script>
+    // 1.我们将字符串进行封装：字符串不能绑定事件
+    // 2.将字符串变换成dom元素
+    class Switch{
+      constructor(){
+        this.state = {turn:false}
+      }
+      createDOMFromString(str){
+        let oDiv = document.createElement('div');
+        oDiv.innerHTML = str;
+        return oDiv.firstElementChild;
+      }
+      setState(newState){
+        Object.assign(this.state,newState); //之所以不直接赋值，是因为state里可能还有其他属性
+        //this.state={...this.state,...{turn:!this.state.turn}}
+
+        let oldEl = this.el;
+        let newEl = this.render(); //渲染一个新的元素
+        oldEl.parentNode.replaceChild(newEl, oldEl);
+      }
+      Change(){
+        // console.log(this)
+        this.setState({turn:!this.state.turn});
+      }
+      render(){
+        this.el = this.createDOMFromString(`
+        <div>
+            <input type="checkbox" class="switch" ${this.state.turn?'checked':''} >
+            <p class="text">${this.state.turn?'开':'关'}</p>
+        </div>
+        `);
+        //以下的this.change只是把Switch原型上的Change方法的地址给了（并没有执行，故this并不指向实例）
+        // this.el.firstElementChild.addEventListener('change',this.Change); //这样的话Change方法内部的this仍然指向->this.el.firstElementChild 而不是当期实例
+
+        this.el.firstElementChild.addEventListener('change',()=>this.Change());
+        return this.el;
+      }
+    }
+
+    let app = document.querySelector('.app');
+    app.appendChild(new Switch().render());
+    app.appendChild(new Switch().render());
+</script>
+</body>
+</html>
