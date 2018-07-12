@@ -137,3 +137,32 @@ Diff细节
 2. 支持跨端应用 -> React Native
   原生应用里不存在dom的概念，但是有了虚拟dom，它只是一个js对象，是可以被识别的
   ，这个时候只需要做一些调整，不让虚拟dom生成dom而是转换成原生应用里的组件 即可
+
+## 纯函数
+react-redux中，reducer必须是一个纯函数，给定固定的输入，就一定会有固定的输出，而且不会有任何副作用(比如对传入的参数进行了修改)
+
+## 无状态组件
+-> 函数(非类)组件 多用于UI组件
+
+## 插件支持
+### babel-plugin-transform-decorators-legacy
+如果使用react脚手架创建的app，
+
+需要eject的情况下package.json中如下配置
+```
+"babel": {
+    "presets": [
+      "react-app"
+    ]
+    ,"plugins":[
+      "transform-decorators-legacy"
+    ]
+},
+```
+
+也可不eject
+
+找到node_modules/babel-preset-react-app/index.js，然后在plugins加入装饰器支持
+
+### redux-devltools-extension
+> https://github.com/zalmoxisus/redux-devtools-extension
