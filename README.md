@@ -166,3 +166,10 @@ react-redux中，reducer必须是一个纯函数，给定固定的输入，就�
 
 ### redux-devltools-extension
 > https://github.com/zalmoxisus/redux-devtools-extension
+
+## 关于组件更新
+只要调用`setState`，组件就会更新，不论setState是否传递了一个值
+
+父组件重新渲染，所有子组件都会重新渲染（即使该子组件的状态并没有改变）
+
+使用redux时，只要仓库里的状态改变，所有组件都会刷新，因为只要dispatch，所有组件订阅的listener就会执行，即`() => {this.setState(mapStateToProps(this.props.store.getState()))}`，即所有木偶组件的容器组件都会刷新状态，So，容器组件(父)就会重新渲染，因此所有木偶(子)组件也就会重新渲染
