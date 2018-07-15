@@ -1,5 +1,11 @@
 [toc]
 
+## 安装
+```
+npm i -g create-react-app
+create-react-app 你的项目名
+```
+
 ## React fiber
 
 React fiber 指 React16.x
